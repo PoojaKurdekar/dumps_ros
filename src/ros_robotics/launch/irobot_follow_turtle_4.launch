@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<launch>
+
+    <include file="$(find ros_robotics)/launch/run_turtle_tf_broadcaster.launch"/>
+    <include file="$(find ros_robotics)/launch/run_turtle_tf_listener.launch">
+        <arg name="model_to_be_followed_name" value="diff_wheeled_robot" />
+        <arg name="follower_model_name" value="Robot1" />
+    </include>
+    
+    <include file="$(find ros_robotics)/launch/run_turtle_tf_broadcaster_1.launch"/>
+    <include file="$(find ros_robotics)/launch/run_turtle_tf_listener _1.launch">
+        <arg name="model_to_be_followed_name" value="Robot2" />
+        <arg name="follower_model_name" value="Robot3" />
+    </include>
+
+</launch>

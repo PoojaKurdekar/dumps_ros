@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<launch>
+    <param name="pallet" textfile="$(find ros_robotics)/pallet.model" /> 
+    <node name="spawn_pallet" pkg="gazebo" type="spawn_model" args="-param pallet -gazebo -model pallet1 -x 0.0 -y -0.8 -z 0.15" output="screen" /> 
+</launch>

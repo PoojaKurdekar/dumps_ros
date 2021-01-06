@@ -1,0 +1,26 @@
+<launch>
+
+  <!-- these are the arguments you can pass this launch file, for example paused:=true -->
+  <arg name="paused" default="false"/>
+  <arg name="use_sim_time" default="true"/>
+  <arg name="gui" default="true"/>
+  <arg name="headless" default="false"/>
+  <arg name="debug" default="false"/>
+
+
+  <!-- urdf xml robot description loaded on the Parameter Server-->
+  <param name="robot_description" command="$(find xacro)/xacro.py '$(find ros_robotics)/urdf/robots_des/diff_wheeled_robot_with_sensor_6.xacro'" /> 
+ 
+  <group ns="robot6">
+    <param name="tf_prefix" value="robot6_tf" />
+    <arg name="init_pose" value="-x 5 -y 5 -z 0" />
+    <arg name="robot_name"  value="Robot6" />
+    <node name="urdf_6_spawner" pkg="gazebo_ros" type="spawn_model"
+     args="$(arg init_pose) -urdf -param /robot_description -model $(arg robot_name)"
+     respawn="false" output="screen" /> 
+    
+
+  </group>
+  
+
+</launch>

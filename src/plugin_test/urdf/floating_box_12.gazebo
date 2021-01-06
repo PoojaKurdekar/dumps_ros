@@ -1,0 +1,146 @@
+<?xml version="1.0"?>
+<robot name="floating_box_2" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <material name="black">
+    <color rgba="0.0 0.0 0.0 1.0"/>
+  </material>
+  <material name="blue">
+    <color rgba="0.203125 0.23828125 0.28515625 1.0"/>
+  </material>
+  <material name="green">
+    <color rgba="0.0 0.8 0.0 1.0"/>
+  </material>
+  <material name="grey">
+    <color rgba="0.2 0.2 0.2 1.0"/>
+  </material>
+  <material name="orange">
+    <color rgba="1.0 0.423529411765 0.0392156862745 1.0"/>
+  </material>
+  <material name="brown">
+    <color rgba="0.870588235294 0.811764705882 0.764705882353 1.0"/>
+  </material>
+  <material name="red">
+    <color rgba="0.80078125 0.12890625 0.1328125 1.0"/>
+  </material>
+  <material name="white">
+    <color rgba="1.0 1.0 1.0 1.0"/>
+  </material>
+<!--Gazebo Visuals-->  
+  <gazebo reference="base_footprint_2">
+    <material>Gazebo/Blue</material>
+  </gazebo>
+  <gazebo reference="base_link_2">
+    <material>Gazebo/Orange</material>
+  </gazebo>
+  <gazebo reference="base_link_1_2">
+    <material>Gazebo/Orange</material>
+  </gazebo>
+  <!-- root link, on the ground just below the model origin -->
+  <link name="base_footprint_2">
+   <visual>
+      <origin xyz="4 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.001 0.001 0.001" />
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="base_link_joint_2" type="fixed">
+    <origin xyz="4.0 0 1.25" rpy="0 0 0" />
+    <parent link="base_footprint_2"/>
+    <child link="base_link_2" />
+  </joint>
+  
+  <joint name="base_link_joint_1_2" type="fixed">
+    <origin xyz="4.0 0 1.25" rpy="0 0 0" />
+    <parent link="base_footprint_2"/>
+    <child link="base_link_1_2" />
+  </joint>
+
+  <!-- the model -->
+  <link name="base_link_2">
+    <inertial>
+      <mass value="50" />
+      <origin xyz="0 0 -1.25" />
+      <inertia ixx="50.0" ixy="0.0" ixz="0.0"
+        iyy="50.0" iyz="0.0"
+        izz="50.0" />
+    </inertial>
+    <visual>
+      <geometry>
+        <box size="0.5 0.5 1" /> <!-- does not need to match collision -->
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 -1.0" />
+      <geometry>
+        <cylinder length="0.5" radius="0.25" />
+      </geometry>
+    </collision>
+  </link>
+  
+  <link name="base_link_1_2">
+    <inertial>
+      <mass value="50" />
+      <origin xyz="0 0 -1.25" />
+      <inertia ixx="50.0" ixy="0.0" ixz="0.0"
+        iyy="50.0" iyz="0.0"
+        izz="50.0" />
+    </inertial>
+    <visual>
+      <geometry>
+        <box size="0.5 0.5 1" /> <!-- does not need to match collision -->
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 -1.0" />
+      <geometry>
+        <cylinder length="0.5" radius="0.25" />
+      </geometry>
+    </collision>
+  </link>
+
+  <gazebo>
+    <plugin name="gazebo_ros_force" filename="libgazebo_ros_force.so">
+       <bodyName>base_footprint_2</bodyName>
+       <link_name_>base_link_2</link_name_>
+       <topicName>topic_name_2</topicName>
+    </plugin>
+  </gazebo>
+
+
+  <gazebo>  
+  	<plugin name="p3d_base_controller" filename="libgazebo_ros_p3d.so">
+  		<alwaysOn>true</alwaysOn>
+  		<updateRate>50.0</updateRate>
+  		<bodyName>base_link_1_2</bodyName>
+  		<topicName>odom_2</topicName>
+  		<gaussianNoise>0.01</gaussianNoise>
+  		<frameName>world</frameName>
+  		<xyzOffsets>0 0 0</xyzOffsets>
+  		<rpyOffsets>0 0 0</rpyOffsets>
+	</plugin>
+  </gazebo>
+<!--
+  <gazebo>
+    <plugin name="imu_plugin" filename="libgazebo_ros_imu.so">
+      <alwaysOn>true</alwaysOn>
+      <bodyName>base_footprint</bodyName>
+      <topicName>imu</topicName>
+      <serviceName>imu_service</serviceName>
+      <gaussianNoise>0.0</gaussianNoise>
+      <updateRate>20.0</updateRate>
+    </plugin>
+  </gazebo>
+
+
+  <gazebo>
+    <plugin name="object_controller" filename="libgazebo_ros_planar_move.so">
+      <commandTopic>cmd_vel</commandTopic>
+      <odometryTopic>odom</odometryTopic>
+      <odometryFrame>odom</odometryFrame>
+      <odometryRate>20.0</odometryRate>
+      <robotBaseFrame>base_link</robotBaseFrame>
+    </plugin>
+  </gazebo>
+-->
+</robot>

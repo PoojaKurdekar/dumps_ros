@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+  <!-- No namespace here as we will share this description.
+       Access with slash at the beginning -->
+  <arg name="nr"/>
+ 
+  <param name="robot_description" command="$(find xacro)/xacro.py '$(find ros_robotics)/urdf/diff_wheeled_robot_with_sensor.xacro' namespace:=$(arg nr)" /> 
+  
+  <!-- BEGIN ROBOT 1-->
+  <group ns="robot_$(arg nr)">
+    
+    <param name="tf_prefix" value="robot_$(arg nr)_tf" />
+    <include file="$(find ros_robotics)/launch/one_robot12.launch" >
+      <arg name="init_pose" value="-x 3 -y 1 -z 0" />
+      <arg name="robot_name" value="robot_$(arg nr)" />
+      <arg name="nr" value="$(arg nr)"/>
+      <arg name="namespace" value="$(arg nr)" /> 
+    </include>
+  </group>
+ 
+  
+  <!-- BEGIN ROBOT 2-->
+  <group ns="robot_$(eval arg ('nr') - 1)">
+    <arg name="namespace" value="$(eval arg ('nr') - 1)" />  
+    <param name="tf_prefix" value="robot_$(eval arg ('nr') - 1)_tf" />
+    <include file="$(find ros_robotics)/launch/one_robot12.launch" >
+      <arg name="init_pose" value="-x -4 -y 1 -z 0" />
+      <arg name="robot_name" value="robot_$(eval arg ('nr') - 1)" />
+      <arg name="nr" value="$(eval arg ('nr') - 1)"/>
+    </include>
+  </group>
+
+</launch>

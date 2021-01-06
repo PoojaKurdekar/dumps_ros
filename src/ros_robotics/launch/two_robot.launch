@@ -1,0 +1,13 @@
+<!-- Spawn the whole environment -->
+<launch>
+    <!-- Spawn the world -->
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    </include>
+    <arg name="nr" default="1"/>
+    <include ns="robot_$(arg nr)" file="$(find ros_robotics)/launch/robot_1.launch"> 
+    </include>
+
+    <include ns="robot_$(arg nr)-1" file="$(find ros_robotics)/launch/robot_2.launch"> 
+    <arg name="nr" value="$(eval arg('nr') - 1)"/>
+    </include>
+</launch>

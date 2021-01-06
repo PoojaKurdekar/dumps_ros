@@ -1,0 +1,13 @@
+<!-- Spawn the whole environment -->
+<launch>
+    <!-- Spawn the world -->
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    </include>
+   
+    <include ns="robot_1" file="$(find ros_robotics)/launch/robot_1.launch"> 
+    </include>
+
+    <include ns="robot_2" file="$(find ros_robotics)/launch/robot_2.launch"> 
+    
+    </include>
+</launch>

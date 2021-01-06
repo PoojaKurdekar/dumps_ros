@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<launch>
+
+    <include file="$(find ros_robotics)/launch/run_turtle_tf_broadcaster.launch"/>
+    <include file="$(find ros_robotics)/launch/run_turtle_tf_listener.launch">
+        <arg name="model_to_be_followed_name" value="robot_2" />
+        <arg name="follower_model_name" value="robot_1" />
+    </include>
+    
+</launch>
